@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "task_id": "26dd7474b2ca4347bf4ab3bdd1902286",
+  "model": "zai-org/CogVideoX-2b",
+  "execution": "self_hosted",
+  "status": "succeeded",
+  "parameters": {
+    "prompt": "A close-up realistic video of a bright red miniature toy car, fully visible in the center of the image throughout the entire video. The toy car fills most of the foreground on a dark wooden desk with clearly visible wood grain. Its glossy red body, small black rubber wheels and silver wheel rims are clearly detailed. The car rolls only a few centimeters very slowly, remaining centered and fully within the image. The camera is completely stationary at table height. In the background, a softly blurred bookshelf and a warm desk lamp create a cozy room. Soft window light reveals reflections on the red paint and the texture of the dark wood. A single continuous shot, realistic miniature photography, gentle natural motion.",
+    "negative_prompt": "blurry, low quality, distorted, text, watermark",
+    "model_id": "zai-org/CogVideoX-2b",
+    "inference_profile": "cog2b-dpm20-fp16-v1",
+    "scheduler": "dpm",
+    "precision": "float16",
+    "vae_precision": "float16",
+    "seed": 42,
+    "width": 720,
+    "height": 480,
+    "frames": 49,
+    "fps": 8,
+    "steps": 20,
+    "guidance": 6,
+    "max_sequence_length": 226
+  },
+  "times": {
+    "created_at": "2026-10-21T07:56:22.401778+00:00",
+    "started_at": "2026-10-21T07:56:24.296961+00:00",
+    "finished_at": "2026-10-21T08:04:07.952671+00:00"
+  },
+  "measurements": {
+    "precision": "float16",
+    "vae_precision": "float16",
+    "generation_seconds": 447.197,
+    "model_load_seconds": 6.886,
+    "prompt_encoding_seconds": 32.413,
+    "sampling_and_decode_seconds": 412.956,
+    "peak_gpu_allocated_bytes": 8253398016
+  },
+  "output": {
+    "sha256": "befaaf6a0eff4595222b1262e7bba52c258f9d7af84830a66a63af677057774f",
+    "width": 720,
+    "height": 480,
+    "decoded_frames": 49,
+    "fps": 8,
+    "duration_seconds": 6.13,
+    "codec": "h264"
+  },
+  "visual_review": {
+    "approved": true,
+    "reason": "助手检查四帧接触表：红色玩具车、木桌和轻微变化可见；主体裁切、细节与描述一致性有限，不等于逐帧人审或通用质量通过。"
+  },
+  "limitation": "参数和指标是本次任务记录；不同硬件、依赖和种子实现可能影响复现，未包含模型权重、认证信息或供应商下载链接。"
+}

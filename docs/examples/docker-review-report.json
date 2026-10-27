@@ -1,0 +1,16 @@
+{
+  "mode": "cpu_review",
+  "docker_build_tested": false,
+  "fresh_dependencies_tested": false,
+  "http_health": true,
+  "real_login": true,
+  "admin_page": true,
+  "studio_page": true,
+  "generation_rejected": true,
+  "empty_queue_preserved": true,
+  "video_ranges": 3,
+  "credential_printed": false,
+  "private_routes_protected": true,
+  "compose_yaml_and_selected_constraints": "passed_not_docker_compose_cli",
+  "episode_sha256": "a9300d0c468e819d3675b670e49877f540a3eb9eae6fcbf7a13aa20a81b3f3e4"
+}

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>分镜草稿 · 帧序 Studio</title><link rel="stylesheet" href="/assets/studio.css"><script src="/assets/storyboard.js?v=shared-shell-20261025-v1" defer></script>
+<style>main{max-width:1150px}.board-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:20px}.board-toolbar select{width:auto;max-width:320px}.board-head{display:grid;grid-template-columns:1fr 270px;gap:24px}.summary-box{padding:22px;background:#f5f7ff;border-radius:12px;margin-top:15px}.summary-box strong{font-size:26px;display:block;color:#4165ef}.shot{margin-top:16px}.shot-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.shot-head h3{font-size:14px;margin:0}.shot-tools{display:flex;gap:6px;flex-wrap:wrap}.shot-body{display:grid;grid-template-columns:1fr 250px;gap:16px}.shot label{margin-top:10px}.shot textarea{width:100%}.shot input{max-width:130px}.board-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.board-actions .primary{width:auto;margin:0;padding:10px 24px}.board-note{padding:16px 20px;border:1px solid #e5eaf3;background:#fff;border-radius:10px;font-size:12px;color:#6c7f9e;margin-bottom:22px}@media(max-width:700px){.board-head,.shot-body{grid-template-columns:1fr}.shot-head{align-items:flex-start}.summary-box{margin:0}.shot-tools .secondary{padding:4px 7px}.board-toolbar select{width:100%;max-width:none}}</style><link rel="stylesheet" href="/assets/storyboard-v3.css?v=20261020"><script defer src="/assets/session.js?v=shared-shell-20261025-v1"></script><link rel="stylesheet" href="/assets/workspace-shell.css?v=shared-shell-20261025-v1"><script defer src="/assets/workspace-shell.js?v=shared-shell-20261025-v1"></script></head>
+<body><aside class="sidebar workspace-sidebar-host" data-workspace-shell>
+  <a class="brand" href="/studio?ui=shared-shell-20261025-v1"><span class="brand-mark">◩</span><span>帧序<small>STUDIO</small></span></a>
+  <p class="nav-label">工作空间</p>
+  <nav class="workspace-nav" aria-label="工作空间">
+    <a class="nav-item" data-view="create" href="/studio?view=create&amp;ui=shared-shell-20261025-v1"><span>✧</span>视频创作</a>
+    <a class="nav-item" href="/projects?ui=shared-shell-20261025-v1"><span>▣</span>短剧项目</a>
+    <a class="nav-item" data-view="works" href="/studio?view=works&amp;ui=shared-shell-20261025-v1"><span>▦</span>我的作品 <small id="nav-works">—</small></a>
+    <a class="nav-item" data-view="tasks" href="/studio?view=tasks&amp;ui=shared-shell-20261025-v1"><span>☷</span>任务中心 <small id="nav-active">—</small></a>
+    <a class="nav-item" href="/storyboard?ui=shared-shell-20261025-v1"><span>▤</span>分镜草稿</a>
+    <a class="nav-item" href="/edits?ui=shared-shell-20261025-v1"><span>▤</span>片段编辑</a>
+    <a class="nav-item" href="/video-api?ui=shared-shell-20261025-v1"><span>↗</span>视频模型 API</a>
+  </nav>
+  <p class="nav-label second-label">创作工具</p>
+  <nav class="workspace-tools" aria-label="创作工具">
+    <a class="nav-item" href="/assistant?ui=shared-shell-20261025-v1"><span>⌘</span>本地需求助手</a>
+    <a class="nav-item" id="model-info" href="/studio?panel=models&amp;ui=shared-shell-20261025-v1"><span>◇</span>模型与能力</a>
+  </nav>
+  <div class="sidebar-bottom"><span class="avatar">W</span><div><b>个人创作空间</b><span><i id="status-dot"></i><span id="connection">正在连接</span></span></div><button id="theme" class="icon-button" aria-label="切换浅色模式" title="切换浅色模式">☼</button></div>
+</aside><div class="app-shell"><header class="topbar"><div class="breadcrumbs">工作空间 <span>/</span><b>分镜草稿</b></div><div class="top-actions"></div></header><main>
+<section class="hero"><div><p class="eyebrow">STORYBOARD PLANNING</p><h1>先把故事，拆成镜头。</h1><p>编辑顺序、画面和旁白，先看清镜头与节奏，再决定如何制作。</p></div><span class="session-tag">草稿功能 · 未生成</span></section>
+<p class="board-note">此页只保存草稿，不调用付费模型。生成、配音、字幕和合成尚未接通。示例是人工编写的创作模板，不能记为AI自动分镜或一分钟短剧已经完成。</p>
+<div class="board-toolbar"><label class="sr-only" for="board-list">已保存的草稿</label><select id="board-list"><option value="">打开已保存草稿…</option></select><button id="new-board" class="secondary">新建空白</button><button id="template" class="secondary">填入一分钟纸船故事示例</button></div>
+<section class="panel board-head"><div><label for="title">草稿标题</label><input id="title" maxlength="120" placeholder="给这一集起个名字"><label for="synopsis">剧情与一致性要求</label><textarea id="synopsis" rows="3" maxlength="2000" placeholder="讲清楚故事顺序、角色特征和场景。参考素材能力仍待后续接入。"></textarea></div><div class="summary-box"><span>规划总时长</span><strong id="total-seconds">—</strong><span>生成方式</span><strong id="output-cost">—</strong><p id="budget-note" class="hint"></p><p class="hint">本地H3固定约5.17秒；规划时长不代表模型原生输出时长。</p></div></section>
+<div id="shots"></div><div class="board-actions"><button id="add-shot" class="secondary">＋ 添加镜头</button><button id="save-board" class="primary">保存草稿（不生成）</button><button id="export-board" class="secondary">导出JSON草稿</button></div><p id="board-message" class="hint" role="status" aria-live="polite"></p><footer>镜头之间的角色、风格与动作一致性需要实际制作后审阅；时长总和不等于最终成片时长。</footer>
+</main></div></body></html>

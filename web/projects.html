@@ -1,0 +1,30 @@
+<!doctype html><html lang="zh-CN" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>帧序 · 短剧项目</title><link rel="stylesheet" href="/assets/studio-v3.css?v=h3-local-20261022-v3"><link rel="stylesheet" href="/assets/projects.css?v=design-20261021-v1"><script type="module" src="/assets/projects.js?v=shared-shell-20261025-v1"></script><script defer src="/assets/session.js?v=shared-shell-20261025-v1"></script><link rel="stylesheet" href="/assets/workspace-shell.css?v=shared-shell-20261025-v1"><script defer src="/assets/workspace-shell.js?v=shared-shell-20261025-v1"></script></head><body>
+<aside class="sidebar workspace-sidebar-host" data-workspace-shell>
+  <a class="brand" href="/studio?ui=shared-shell-20261025-v1"><span class="brand-mark">◩</span><span>帧序<small>STUDIO</small></span></a>
+  <p class="nav-label">工作空间</p>
+  <nav class="workspace-nav" aria-label="工作空间">
+    <a class="nav-item" data-view="create" href="/studio?view=create&amp;ui=shared-shell-20261025-v1"><span>✧</span>视频创作</a>
+    <a class="nav-item" href="/projects?ui=shared-shell-20261025-v1"><span>▣</span>短剧项目</a>
+    <a class="nav-item" data-view="works" href="/studio?view=works&amp;ui=shared-shell-20261025-v1"><span>▦</span>我的作品 <small id="nav-works">—</small></a>
+    <a class="nav-item" data-view="tasks" href="/studio?view=tasks&amp;ui=shared-shell-20261025-v1"><span>☷</span>任务中心 <small id="nav-active">—</small></a>
+    <a class="nav-item" href="/storyboard?ui=shared-shell-20261025-v1"><span>▤</span>分镜草稿</a>
+    <a class="nav-item" href="/edits?ui=shared-shell-20261025-v1"><span>▤</span>片段编辑</a>
+    <a class="nav-item" href="/video-api?ui=shared-shell-20261025-v1"><span>↗</span>视频模型 API</a>
+  </nav>
+  <p class="nav-label second-label">创作工具</p>
+  <nav class="workspace-tools" aria-label="创作工具">
+    <a class="nav-item" href="/assistant?ui=shared-shell-20261025-v1"><span>⌘</span>本地需求助手</a>
+    <a class="nav-item" id="model-info" href="/studio?panel=models&amp;ui=shared-shell-20261025-v1"><span>◇</span>模型与能力</a>
+  </nav>
+  <div class="sidebar-bottom"><span class="avatar">W</span><div><b>个人创作空间</b><span><i id="status-dot"></i><span id="connection">正在连接</span></span></div><button id="theme" class="icon-button" aria-label="切换浅色模式" title="切换浅色模式">☼</button></div>
+</aside>
+<div class="app-shell"><header class="topbar"><div class="breadcrumbs">工作空间 / <b>短剧项目</b></div><div class="top-actions"><span id="saved-status">未打开项目</span><button id="reload" class="secondary-button">重新载入</button><button id="save" class="primary-button">保存项目</button></div></header><main class="project-main"><section class="project-switcher" aria-label="我的项目"><div class="section-heading"><h2>我的项目</h2><button id="new-project" class="secondary-button">＋ 新建项目</button></div><div id="project-list"></div></section>
+<section class="project-hero"><div><p class="eyebrow">ONE STORY. EVERY EPISODE.</p><h1>让故事，连成一部剧。</h1><p>项目设定 → 剧集 → 分镜 → 生成版本。每一个镜头都有来处。</p></div><div class="project-budget"><small>执行方式</small><b id="budget">—</b><small>新生成使用本地模型</small></div></section>
+<p id="message" role="status" class="form-message"></p>
+<section id="empty" class="empty-state"><h2>从一个故事开始</h2><p>建立项目，再添加剧集和镜头；保存草稿不会调用模型。</p><button id="start" class="primary-button">创建我的第一部短剧</button></section>
+<div id="workspace" hidden><details class="project-settings" open><summary>项目设定 <span>全剧的故事、风格与角色备忘</span></summary><div class="settings-grid"><label>项目名称<input id="project-title" maxlength="120" required></label><label>视觉风格<textarea id="style" maxlength="2000" rows="2" placeholder="如：日光、写实、固定镜头；仅作备忘"></textarea></label><label>故事梗概<textarea id="synopsis" maxlength="3000" rows="2"></textarea></label><label>角色与场景设定<textarea id="characters" maxlength="3000" rows="2" placeholder="人物外观、服装、场景；文字备忘不保证跨镜头一致性"></textarea></label></div></details>
+<div class="production-grid"><aside class="episodes-panel"><div class="section-heading"><h2>剧集</h2><button id="add-episode" class="icon-button" aria-label="添加剧集">＋</button></div><div id="episodes"></div><p class="helper">每集独立编排。列表顺序即剧集顺序。</p></aside><section id="episode-area" hidden><div class="episode-heading"><div><p class="eyebrow" id="episode-number"></p><input id="episode-title" aria-label="剧集名称" maxlength="120"></div><label>目标时长（秒）<input id="target-seconds" type="number" min="4" max="1800" step="1"></label></div><textarea id="episode-synopsis" rows="2" maxlength="2000" placeholder="这一集发生了什么？" aria-label="本集梗概"></textarea>
+<div id="episode-stats" class="episode-stats"></div><p class="helper">计划时长用于编排，实际时长以视频为准。Wan约1/2/5秒、Cog约6秒固定预设；H3单镜4–15秒。导出会裁取所选素材、添加中文字幕和程序配乐；AI配音尚未接通。</p><div class="section-heading"><h2>分镜工作区</h2><div class="row-actions"><button id="import-board" class="secondary-button">导入已有草稿</button><button id="add-shot" class="primary-button">＋ 添加分镜</button></div></div><div id="shots"></div>
+<section class="versions-panel"><div class="section-heading"><h2>本集成片</h2><button id="export-episode" class="primary-button">导出本集 ↗</button></div><div id="exports"></div></section><section class="versions-panel"><div class="section-heading"><h2 id="versions-title">镜头版本</h2><button id="link-task" class="secondary-button">关联历史任务</button></div><p class="helper">从工作台生成会自动关联；也可关联已有实验素材。采用版本仅作选片标记，不代表整集已经制作完成。</p><div id="versions"></div></section></section><div id="no-episode" class="empty-state"><h3>添加第一集</h3><p>例如第1集「出发」，目标60秒，再逐个安排镜头。</p></div></div></div></main></div>
+<dialog id="picker" class="info-dialog"><div class="dialog-heading"><h2 id="picker-title">选择记录</h2><button id="close-picker" class="icon-button" aria-label="关闭">×</button></div><div id="picker-items"></div></dialog>
+<dialog id="playback" class="detail-dialog"><div class="dialog-heading"><h2>真实生成版本</h2><button id="close-playback" class="icon-button" aria-label="关闭播放器">×</button></div><video id="version-video" controls playsinline style="width:100%;max-height:65vh"></video><p id="video-caption" class="helper"></p><a id="version-download" class="secondary-button">下载MP4 ↓</a></dialog></body></html>

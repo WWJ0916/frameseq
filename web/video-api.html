@@ -1,0 +1,31 @@
+<!doctype html><html lang="zh-CN" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>帧序 Studio · 视频模型 API</title><link rel="stylesheet" href="/assets/studio-v3.css?v=byok-20261025-v1"><link rel="stylesheet" href="/assets/video-api.css?v=byok-20261025-v1"><script type="module" src="/assets/video-api.js?v=shared-shell-20261025-v1"></script><link rel="stylesheet" href="/assets/workspace-shell.css?v=shared-shell-20261025-v1"><script defer src="/assets/session.js?v=shared-shell-20261025-v1"></script><script defer src="/assets/workspace-shell.js?v=shared-shell-20261025-v1"></script></head>
+<body><aside class="sidebar workspace-sidebar-host" data-workspace-shell>
+  <a class="brand" href="/studio?ui=shared-shell-20261025-v1"><span class="brand-mark">◩</span><span>帧序<small>STUDIO</small></span></a>
+  <p class="nav-label">工作空间</p>
+  <nav class="workspace-nav" aria-label="工作空间">
+    <a class="nav-item" data-view="create" href="/studio?view=create&amp;ui=shared-shell-20261025-v1"><span>✧</span>视频创作</a>
+    <a class="nav-item" href="/projects?ui=shared-shell-20261025-v1"><span>▣</span>短剧项目</a>
+    <a class="nav-item" data-view="works" href="/studio?view=works&amp;ui=shared-shell-20261025-v1"><span>▦</span>我的作品 <small id="nav-works">—</small></a>
+    <a class="nav-item" data-view="tasks" href="/studio?view=tasks&amp;ui=shared-shell-20261025-v1"><span>☷</span>任务中心 <small id="nav-active">—</small></a>
+    <a class="nav-item" href="/storyboard?ui=shared-shell-20261025-v1"><span>▤</span>分镜草稿</a>
+    <a class="nav-item" href="/edits?ui=shared-shell-20261025-v1"><span>▤</span>片段编辑</a>
+    <a class="nav-item" href="/video-api?ui=shared-shell-20261025-v1"><span>↗</span>视频模型 API</a>
+  </nav>
+  <p class="nav-label second-label">创作工具</p>
+  <nav class="workspace-tools" aria-label="创作工具">
+    <a class="nav-item" href="/assistant?ui=shared-shell-20261025-v1"><span>⌘</span>本地需求助手</a>
+    <a class="nav-item" id="model-info" href="/studio?panel=models&amp;ui=shared-shell-20261025-v1"><span>◇</span>模型与能力</a>
+  </nav>
+  <div class="sidebar-bottom"><span class="avatar">W</span><div><b>个人创作空间</b><span><i id="status-dot"></i><span id="connection">正在连接</span></span></div><button id="theme" class="icon-button" aria-label="切换浅色模式" title="切换浅色模式">☼</button></div>
+</aside>
+<div class="app-shell"><header class="topbar"><div class="breadcrumbs">工作空间 <span>/</span><b>视频模型 API</b></div><div class="top-actions"><a class="secondary-button" href="/studio?ui=shared-shell-20261025-v1">返回创作 ↗</a></div></header><main class="api-main">
+<section class="api-hero"><p class="eyebrow">YOUR MODELS / YOUR CHOICE</p><h1>本地算力之外，<br>多一种创作选择<span>。</span></h1><p>连接 MiniMax H3、Seedance 2.5 或 Wan 3.0 的视频API账号。本地 H3 和 Wan 依然可选。</p><p>提供商对应：MiniMax → H3；火山方舟 → Seedance 2.5；阿里百炼 → Wan 3.0。</p><p id="service-state" class="api-status" role="status">正在读取服务状态…</p></section>
+<div class="api-layout"><section class="api-panel"><div class="api-heading"><div><p class="eyebrow">CONNECT A PROVIDER</p><h2 id="form-title">添加视频模型</h2></div><button type="button" id="reset" class="secondary-button">新建连接</button></div>
+<form id="connection-form"><div class="api-fields"><label>供应商<select id="provider" required></select></label><label>连接名称<input id="label" maxlength="60" required placeholder="例如：我的 H3 API"></label><label class="api-wide">模型<select id="api-model" required></select></label><label>账号区域<select id="region" required></select></label><label id="workspace-label" hidden>百炼工作空间 ID<input id="workspace" maxlength="64" autocomplete="off" placeholder="填写 Workspace ID"></label><label class="api-wide">API 密钥<input id="api-key" type="password" minlength="8" maxlength="512" autocomplete="new-password" spellcheck="false" placeholder="只在新增或更换密钥时填写"></label></div>
+<p class="helper">密钥在服务器加密保存，页面不会回显，也不会写入浏览器存储。编辑时留空表示保留原密钥。删除连接会取消尚未向供应商提交的任务；已经提交的任务仍会继续查询。</p>
+<p class="helper" id="provider-note"></p><a id="provider-docs" class="api-docs" target="_blank" rel="noopener noreferrer">查看官方接口说明 ↗</a>
+<div class="api-save"><button class="primary-button" id="save" type="submit" disabled>加密保存连接</button><p>保存不调用生成接口，不产生生成费用。</p></div><p id="message" role="status" aria-live="polite" class="helper"></p></form></section>
+<section class="api-panel"><div class="api-heading"><div><p class="eyebrow">CONNECTED BY YOU</p><h2>我的视频模型</h2></div><span id="connection-count" class="helper">0 / 8</span></div><div id="connections" aria-live="polite"></div><div class="api-next"><h3>接下来怎么用？</h3><ol><li>保存供应商、模型与密钥。</li><li>返回视频创作，在模型列表选择对应的「API」连接。</li><li>设置时长、分辨率与画幅，确认使用自己的余额，再提交。</li></ol><a href="/studio?ui=shared-shell-20261025-v1" class="secondary-button">去视频创作 ↗</a></div></section></div>
+<section class="api-footnote"><h3>把费用和能力说明白</h3><p>这里接入的是视频生成接口。语言订阅、网页会员或通用聊天密钥不一定有视频 API 权限。保存成功只代表配置已存储，供应商权限、余额、地区和实际生成效果仍需在正式提交时验证。</p><p>当前平台支持单次最多 15 秒的文字生成视频。每账号最多 2 个未完成 API 任务、每天最多 10 次提交；朋友体验入口沿用每天 10 条、本地与 API 合计同时 1 条未完成任务。提交状态不明也计入额度，避免重复计费。本地失败不会自动转为收费 API。</p></section>
+</main></div></body></html>

@@ -1,0 +1,86 @@
+<!doctype html>
+
+<html lang="zh-CN" data-theme="dark">
+
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>帧序 Studio · 视频创作空间</title><link rel="stylesheet" href="/assets/studio-v3.css?v=byok-20261025-v1"><link rel="stylesheet" href="/assets/video-api.css?v=byok-20261025-v1"><script type="module" src="/assets/studio-v3.js?v=app-policy-20261026-v2"></script><script defer src="/assets/session.js?v=shared-shell-20261025-v1"></script><link rel="stylesheet" href="/assets/workspace-shell.css?v=shared-shell-20261025-v1"><script defer src="/assets/workspace-shell.js?v=shared-shell-20261025-v1"></script></head>
+
+<body>
+
+<aside class="sidebar workspace-sidebar-host" data-workspace-shell>
+  <a class="brand" href="/studio?ui=shared-shell-20261025-v1"><span class="brand-mark">◩</span><span>帧序<small>STUDIO</small></span></a>
+  <p class="nav-label">工作空间</p>
+  <nav class="workspace-nav" aria-label="工作空间">
+    <a class="nav-item" data-view="create" href="/studio?view=create&amp;ui=shared-shell-20261025-v1"><span>✧</span>视频创作</a>
+    <a class="nav-item" href="/projects?ui=shared-shell-20261025-v1"><span>▣</span>短剧项目</a>
+    <a class="nav-item" data-view="works" href="/studio?view=works&amp;ui=shared-shell-20261025-v1"><span>▦</span>我的作品 <small id="nav-works">—</small></a>
+    <a class="nav-item" data-view="tasks" href="/studio?view=tasks&amp;ui=shared-shell-20261025-v1"><span>☷</span>任务中心 <small id="nav-active">—</small></a>
+    <a class="nav-item" href="/storyboard?ui=shared-shell-20261025-v1"><span>▤</span>分镜草稿</a>
+    <a class="nav-item" href="/edits?ui=shared-shell-20261025-v1"><span>▤</span>片段编辑</a>
+    <a class="nav-item" href="/video-api?ui=shared-shell-20261025-v1"><span>↗</span>视频模型 API</a>
+  </nav>
+  <p class="nav-label second-label">创作工具</p>
+  <nav class="workspace-tools" aria-label="创作工具">
+    <a class="nav-item" href="/assistant?ui=shared-shell-20261025-v1"><span>⌘</span>本地需求助手</a>
+    <a class="nav-item" id="model-info" href="/studio?panel=models&amp;ui=shared-shell-20261025-v1"><span>◇</span>模型与能力</a>
+  </nav>
+  <div class="sidebar-bottom"><span class="avatar">W</span><div><b>个人创作空间</b><span><i id="status-dot"></i><span id="connection">正在连接</span></span></div><button id="theme" class="icon-button" aria-label="切换浅色模式" title="切换浅色模式">☼</button></div>
+</aside>
+
+<div class="app-shell"><header class="topbar"><div class="breadcrumbs">工作空间 <span>/</span><b id="page-title">视频创作</b></div><div class="top-actions"><span class="budget-label">执行方式</span><button id="budget-info" class="budget-pill" title="本地模型与自己的视频API并存">◈ <b id="budget">本地模型</b></button><button id="refresh" class="icon-button" title="刷新任务状态" aria-label="刷新任务状态">↻</button></div></header>
+
+<main>
+
+  <section id="create-area" class="create-area">
+
+    <div class="hero"><p class="eyebrow">FRAMESEQ / CREATIVE STUDIO</p><h1>把脑海中的一幕，<br>变成故事的第一帧<span>。</span></h1><p>从一个镜头开始。描绘、生成、选片，让每一次灵感都有来处。</p></div>
+
+    <div class="creation-tabs"><span class="selected">✧ 文生视频</span><a href="/projects?ui=shared-shell-20261025-v1">▣ 短剧项目 <small>剧集 · 分镜</small></a></div>
+
+    <p class="helper" style="text-align:center">本地模型照常使用，也可<a href="/video-api?ui=shared-shell-20261025-v1">接入自己的视频API ↗</a></p><p id="shot-context" class="helper" hidden></p>
+
+    <form id="studio-form" class="composer">
+
+      <div class="composer-heading"><span>● 画面描述</span><span id="draft-status">描述你的创意</span></div>
+
+      <label class="sr-only" for="prompt">视频画面描述</label><textarea id="prompt" rows="4" maxlength="2000" placeholder="雨夜的石板巷，一位邮差握着红色信封，抬头看向远处的暖灯。中景，镜头缓缓推进，冷蓝夜色与琥珀灯光……" required></textarea>
+
+      <div class="composer-caption"><span>主体、动作、环境与镜头，让画面更有方向。</span><span id="char-count">0 / 2000</span></div>
+
+      <div class="composer-toolbar"><div class="parameter-controls"><label class="model-select"><span>◇</span><select id="model" aria-label="选择视频模型"><option value="local-h3">MiniMax H3 · 本地实验</option><option value="local-wan" selected>Wan2.1 · 本地部署</option><option value="local-cogvideo">CogVideoX · 2B 实验预览</option></select></label><span class="divider"></span><span class="parameter-chip" id="duration-chip">◷ 4秒</span><span class="parameter-chip" id="resolution-chip">▣ 768P</span><span class="parameter-chip" id="ratio-chip">▭ 16:9</span><span class="parameter-chip count-chip">× 1条</span><button type="button" class="parameter-chip" id="settings" aria-expanded="false" aria-controls="advanced">⚙ 参数</button></div><button id="submit" class="generate-button" type="submit" disabled><span id="submit-label">正在连接</span><span>↗</span></button></div>
+
+      <div id="advanced" class="advanced" hidden><div id="local-fields" class="advanced-grid" hidden><label>本地规格<select id="preset"><option value="h3-native" hidden>H3 · 864×480 · 124帧 · Turbo 8步</option><option value="fast">快速验证 · 320×192 · 17帧</option><option value="preview">预览 · 480×272 · 33帧</option><option value="story">低清分镜 · 480×272 · 81帧 · 约5秒</option><option value="cinema" disabled>原生480P · 832×480 · 81帧 · 需本机验收</option></select></label><label>随机种子<input id="seed" type="number" value="42" min="0" max="2147483647" step="1"></label><label class="wide-field">负面描述（选填）<input id="negative" maxlength="2000" placeholder="如 blurry, distorted, text, watermark"></label></div><div id="cloud-fields" class="advanced-grid"><label>时长方式<select id="duration-mode"><option value="manual">自定义时长</option><option value="suggested">按描述建议（规则估算）</option></select></label><label>生成时长（秒）<input id="duration" type="number" min="4" max="15" step="1" value="4"></label><label>分辨率<select id="api-resolution"><option>768P</option></select></label><label>画幅<select id="api-ratio"><option>16:9</option><option>9:16</option><option>1:1</option><option>4:3</option><option>3:4</option><option>21:9</option></select></label><label class="wide-field api-consent"><input id="api-consent" type="checkbox">我确认本次使用自己的供应商API余额，可能产生费用。</label><p class="helper wide-field" id="duration-explanation">按所选API模型填写时长与规格。建议时长是规则估算，尚未进行这些自带密钥接口的真实付费生成验收。</p></div><p id="model-hint" class="helper"></p></div>
+
+    </form>
+
+    <div class="composer-under"><p id="cost-hint">预计¥2/次 · 仅点击生成才提交任务</p><span>Ctrl / ⌘ + Enter 提交</span></div><p id="form-message" class="form-message" role="status" aria-live="polite"></p>
+
+    <section class="shot-design" aria-labelledby="shot-design-title"><div class="shot-design-heading"><div><p class="eyebrow">A LITTLE DIRECTION GOES A LONG WAY</p><h2 id="shot-design-title">给灵感一点镜头语言</h2></div><button type="button" id="open-brief" class="secondary-button" aria-expanded="false" aria-controls="brief-editor">自定义镜头 ↗</button></div>
+
+<div class="recipe-grid"><button class="recipe-card rain" data-recipe="rain" type="button"><span class="recipe-number">01 / CINEMA</span><b>雨夜来信</b><span>人物叙事 · 冷暖光影 · 缓慢推进</span><small>编辑镜头描述 ↗</small></button><button class="recipe-card train" data-recipe="train" type="button"><span class="recipe-number">02 / JOURNEY</span><b>驶向黄昏</b><span>海岸电车 · 金色逆光 · 横向跟拍</span><small>编辑镜头描述 ↗</small></button><button class="recipe-card fantasy" data-recipe="fantasy" type="button"><span class="recipe-number">03 / IMAGINATION</span><b>云海灯塔</b><span>幻想世界 · 环境叙事 · 空间层次</span><small>编辑镜头描述 ↗</small></button></div>
+
+<p class="recipe-caption">原创文字模板 · 点击仅编辑，不生成视频；画面效果取决于所选模型。</p>
+
+<div id="brief-editor" class="brief-editor" hidden><div class="brief-title"><h3>设计一个清楚的镜头</h3><label>语言格式（不翻译）<select id="brief-language"><option value="zh">中文 · 适合 H3</option><option value="en">English · 适合本地模型</option></select></label></div><div class="brief-grid"><label>主体<input id="brief-subject" maxlength="400" placeholder="谁在画面里？外观、服装、位置"></label><label>主要动作<input id="brief-action" maxlength="400" placeholder="一个镜头先表达一个动作"></label><label class="wide-field">场景与层次<input id="brief-scene" maxlength="500" placeholder="前景、中景、背景和时间"></label><label>景别与运镜<input id="brief-camera" maxlength="400" placeholder="如中景、缓慢推进、保持连续镜头"></label><label>光线与风格<input id="brief-style" maxlength="400" placeholder="如冷暖对比、自然皮肤纹理"></label></div><p id="brief-preview" class="helper" aria-live="polite">填写后会在这里整理成描述。</p><div class="brief-footer"><p>文字整理工具，不调用 AI。角色参考图、配音和跨镜一致性暂未接通。</p><button id="use-brief" type="button" class="secondary-button">将描述带入创作 ↑</button></div></div></section>
+
+    <div class="capability-note"><span>●</span> Wan与H3本地开放权重均有真实结果 <button id="capability-link">查看能力说明 ↗</button></div>
+
+  </section>
+
+  <section id="library" class="library"><div class="library-heading"><div><p class="eyebrow">YOUR CREATIVE SPACE</p><h2><span id="library-title">最近作品</span> <small id="library-count">—</small></h2></div><div class="library-mode"><button id="scope-works" aria-pressed="true">作品</button><button id="scope-tasks" aria-pressed="false">全部任务</button></div></div>
+
+    <div class="filters"><div class="filter-tabs"><button data-origin="all" aria-pressed="true">全部模型</button><button data-origin="h3" aria-pressed="false">本地 H3</button><button data-origin="api" aria-pressed="false">我的 API</button><button data-origin="cloud" aria-pressed="false">旧 API 作品</button><button data-origin="wan" aria-pressed="false">本地 Wan</button><button data-origin="cogvideo" aria-pressed="false">本地 CogVideoX</button><button id="favorites-filter" aria-pressed="false">☆ 收藏</button></div><div class="search-controls"><label class="search"><span>⌕</span><input id="search" type="search" placeholder="搜索描述或任务ID" aria-label="搜索描述或任务编号"></label><select id="filter-status" aria-label="筛选任务状态"><option value="all">全部状态</option><option value="active">执行与等待</option><option value="succeeded">已完成</option><option value="failed">失败</option><option value="cancelled">已取消</option></select><select id="sort" aria-label="作品排序"><option value="newest">最新优先</option><option value="oldest">最早优先</option></select></div></div>
+
+    <div id="task-grid" class="task-grid" aria-live="polite"><div class="empty-state"><span>◌</span><h3>正在读取你的作品</h3><p>已有结果会在这里展示。</p></div></div><p id="library-message" class="helper" role="status"></p>
+
+  </section><footer><span id="sync">等待同步</span><span>私人创作空间 · 作品默认仅自己可见</span></footer>
+
+</main></div>
+
+<dialog id="detail-dialog" class="detail-dialog" aria-labelledby="detail-title"><div class="dialog-heading"><div><span class="eyebrow">GENERATION DETAILS</span><h2 id="detail-title">作品详情</h2></div><button id="close-detail" class="icon-button" aria-label="关闭作品详情">×</button></div><div class="detail-grid"><div class="video-stage"><video id="studio-video" controls playsinline preload="metadata" hidden></video><div id="activity" class="activity" hidden><span class="spinner"></span><h3 id="activity-title"></h3><p id="activity-description"></p></div><div id="no-result" class="no-result" hidden><span>◇</span><p>此任务没有可播放的视频</p></div></div><div class="detail-content"><div id="selected-status"></div><p id="selected-prompt"></p><div id="selected-facts" class="facts"></div><p id="review-note" class="helper" hidden></p><p id="selected-error" class="error" hidden></p><div class="detail-actions"><button id="reuse" class="primary-button">复用描述与参数 ↗</button><a id="download" class="secondary-button" hidden>下载MP4 ↓</a><button id="export-record" class="secondary-button">下载生成记录</button><button id="copy" class="secondary-button">复制描述</button><button id="resume" class="secondary-button" hidden>恢复结果查询（不重新生成）</button></div><details class="trace"><summary>任务与来源记录</summary><p id="selected-id"></p><p id="selected-hash"></p><p>本地推理与自带密钥API有独立来源记录。API费用以供应商账单为准；本地耗时含加载、采样、降温与解码。</p></details></div></div></dialog>
+
+<dialog id="info-dialog" class="info-dialog" aria-labelledby="info-title"><div class="dialog-heading"><h2 id="info-title">模型与能力</h2><button id="close-info" class="icon-button" aria-label="关闭说明">×</button></div><div id="info-content"></div></dialog><div id="toast" class="toast" role="status" hidden></div>
+
+</body></html>
+
+
+

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "task_id": "b394c9aead564c41917720e066a4b80f",
+  "model": "Wan2.1-T2V-1.3B",
+  "execution": "self_hosted",
+  "status": "succeeded",
+  "parameters": {
+    "prompt": "A single small blue origami paper boat rests beside a golden leaf at the edge of a calm pond. A warm lantern reflection glows in the water, gentle small ripples. Fixed close-up camera, peaceful evening, miniature cinematic realism.",
+    "negative_prompt": "blurry, low quality, distorted, text, watermark, static image",
+    "seed": 4211,
+    "width": 480,
+    "height": 272,
+    "frames": 81,
+    "fps": 16,
+    "steps": 40,
+    "guidance": 5,
+    "max_sequence_length": 128
+  },
+  "times": {
+    "created_at": "2026-10-20T10:23:51.726898+00:00",
+    "started_at": "2026-10-20T10:23:53.398183+00:00",
+    "finished_at": "2026-10-20T10:30:20.706355+00:00"
+  },
+  "measurements": {
+    "precision": "float16",
+    "generation_seconds": 374.244,
+    "model_load_seconds": 3.646,
+    "prompt_encoding_seconds": 24.247,
+    "sampling_and_decode_seconds": 349.04,
+    "peak_gpu_allocated_bytes": 4817937920
+  },
+  "output": {
+    "sha256": "19c54f154f22cb6018282a1482014d68700335216297f016996e02ca120a599c",
+    "width": 480,
+    "height": 272,
+    "decoded_frames": 81,
+    "fps": 16,
+    "duration_seconds": 5.06,
+    "codec": "h264"
+  },
+  "visual_review": {
+    "approved": null,
+    "reason": "未记录逐镜人工审片；可解码不代表内容合格。"
+  },
+  "limitation": "参数和指标是本次任务记录；不同硬件、依赖和种子实现可能影响复现，未包含模型权重、认证信息或供应商下载链接。"
+}

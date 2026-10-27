@@ -1,0 +1,26 @@
+name: CPU checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        python: ['3.10', '3.11']
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+      - run: python -m scripts.audit_repository --tracked
+      - run: sudo apt-get update && sudo apt-get install -y fonts-arphic-ukai
+      - run: python -m pip install -r requirements-platform.txt
+      - name: Isolated CPU tests (no GPU, models, keys or provider requests)
+        run: |
+          source scripts/env.sh
+          python -m unittest discover -s tests -v
+          node --test tests/*.test.mjs

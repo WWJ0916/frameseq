@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>帧序 · 视频生成实验台</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/app.js?v=shared-shell-20261025-v1" defer></script>
+<script defer src="/assets/session.js?v=shared-shell-20261025-v1"></script><link rel="stylesheet" href="/assets/workspace-shell.css?v=shared-shell-20261025-v1"><script defer src="/assets/workspace-shell.js?v=shared-shell-20261025-v1"></script></head>
+<body><aside class="sidebar workspace-sidebar-host" data-workspace-shell>
+  <a class="brand" href="/studio?ui=shared-shell-20261025-v1"><span class="brand-mark">◩</span><span>帧序<small>STUDIO</small></span></a>
+  <p class="nav-label">工作空间</p>
+  <nav class="workspace-nav" aria-label="工作空间">
+    <a class="nav-item" data-view="create" href="/studio?view=create&amp;ui=shared-shell-20261025-v1"><span>✧</span>视频创作</a>
+    <a class="nav-item" href="/projects?ui=shared-shell-20261025-v1"><span>▣</span>短剧项目</a>
+    <a class="nav-item" data-view="works" href="/studio?view=works&amp;ui=shared-shell-20261025-v1"><span>▦</span>我的作品 <small id="nav-works">—</small></a>
+    <a class="nav-item" data-view="tasks" href="/studio?view=tasks&amp;ui=shared-shell-20261025-v1"><span>☷</span>任务中心 <small id="nav-active">—</small></a>
+    <a class="nav-item" href="/storyboard?ui=shared-shell-20261025-v1"><span>▤</span>分镜草稿</a>
+    <a class="nav-item" href="/edits?ui=shared-shell-20261025-v1"><span>▤</span>片段编辑</a>
+    <a class="nav-item" href="/video-api?ui=shared-shell-20261025-v1"><span>↗</span>视频模型 API</a>
+  </nav>
+  <p class="nav-label second-label">创作工具</p>
+  <nav class="workspace-tools" aria-label="创作工具">
+    <a class="nav-item" href="/assistant?ui=shared-shell-20261025-v1"><span>⌘</span>本地需求助手</a>
+    <a class="nav-item" id="model-info" href="/studio?panel=models&amp;ui=shared-shell-20261025-v1"><span>◇</span>模型与能力</a>
+  </nav>
+  <div class="sidebar-bottom"><span class="avatar">W</span><div><b>个人创作空间</b><span><i id="status-dot"></i><span id="connection">正在连接</span></span></div><button id="theme" class="icon-button" aria-label="切换浅色模式" title="切换浅色模式">☼</button></div>
+</aside><div class="app-shell">
+  <header class="topbar"><div class="breadcrumbs">工作空间 <span>/</span><b>本地需求助手</b></div><div class="top-actions"></div></header>
+  <main>
+    <section class="intro"><p class="eyebrow">从一句描述，到一段视频</p><h1>把想象交给下一帧。</h1><p>自行部署的 Wan2.1 模型 · 单卡顺序生成 · 结果自动保留</p><p><a class="secondary" href="/studio?ui=shared-shell-20261025-v1">新版多模型工作台 ↗</a> <a class="secondary" href="/assets/h3-live.html">H3官方API · 实时进度 ↗</a></p></section>
+    <div class="workspace">
+      <section class="panel compose" aria-labelledby="compose-title">
+        <div class="section-heading"><h2 id="compose-title">创建视频</h2><span class="tag">文生视频</span></div>
+        <form id="task-form">
+          <label for="prompt">画面描述</label>
+          <textarea id="prompt" name="prompt" rows="5" maxlength="2000" required placeholder="描述主体、动作、场景和镜头。可以填写英文，或让需求助手整理中文。"></textarea>
+          <div class="prompt-actions"><button type="button" class="text-button" id="example">填入纸船示例</button><button type="button" class="text-button" id="agent-plan">让需求助手整理</button></div>
+          <p class="hint" id="agent-message" role="status" aria-live="polite"></p>
+          <div class="agent-plan" id="agent-result" hidden><p class="agent-label">本地需求助手 · 先检查方案，再生成</p><p id="agent-summary"></p><p id="agent-description"></p><p class="hint" id="agent-meta"></p><button type="button" class="secondary" id="agent-submit" hidden>确认方案并生成</button></div>
+          <div class="field-row"><div><label for="preset">生成规格</label><select id="preset" name="preset"><option value="fast">快速验证 · 320×192 / 17帧</option><option value="preview">清晰预览 · 480×272 / 33帧</option></select></div><div><label for="seed">随机种子</label><input id="seed" name="seed" type="number" value="42" min="0" max="2147483647" step="1" required></div></div>
+          <p class="hint" id="preset-hint">约1秒视频。已测生成约26秒，排队与加载另计，实际随负载变化。</p>
+          <details><summary>更多参数</summary><label for="negative">希望避免的画面</label><textarea id="negative" rows="2" maxlength="2000">blurry, low quality, distorted, text, watermark, static image</textarea></details>
+          <button class="primary" id="submit" type="submit">提交生成任务 <span>↗</span></button>
+          <p class="feedback" id="form-message" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+      <section class="panel result" aria-labelledby="result-title">
+        <div class="section-heading"><h2 id="result-title">生成结果</h2><span class="status" id="selected-status">等待提交</span></div>
+        <div class="stage" id="empty-stage"><div class="frame-icon">▶</div><h3>你的视频将在这里出现</h3><p>提交任务，或从历史记录中选择一个结果。</p></div>
+        <div id="selected-task" hidden>
+          <div class="progress-area" id="progress-area"><p id="progress-message"></p><progress id="progress" max="100" value="0"></progress><span id="progress-text"></span></div>
+          <video id="video" controls playsinline preload="metadata" hidden></video>
+          <p class="task-prompt" id="selected-prompt"></p>
+          <p class="hint" id="selected-meta"></p>
+          <p class="error" id="selected-error" role="alert" hidden></p>
+          <div class="result-actions"><a id="download" class="secondary" hidden>下载 MP4</a><button class="secondary" id="reuse" type="button">复用描述</button><button class="secondary" id="cancel" type="button" hidden>取消排队</button></div>
+        </div>
+      </section>
+    </div>
+    <section class="panel history" aria-labelledby="history-title"><div class="section-heading"><div><h2 id="history-title">生成历史</h2><p class="hint" id="history-count">读取中</p></div><button type="button" class="secondary" id="refresh">刷新</button></div><div id="history-list" class="history-list"></div><button type="button" class="text-button" id="more" hidden>加载更多</button><p class="hint" id="history-error" role="status"></p></section>
+    <footer>学习实验项目 · 视频质量与运动效果仍在验证 · 所有生成均使用本地开放权重</footer>
+  </main></div>
+</body>
+</html>

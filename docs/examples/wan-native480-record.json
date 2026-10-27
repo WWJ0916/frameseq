@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "task_id": "dc907b1b6f69426db8e219cd7b7dd5d5",
+  "model": "Wan2.1-T2V-1.3B",
+  "execution": "self_hosted",
+  "status": "succeeded",
+  "parameters": {
+    "prompt": "A young female postal courier wearing a beige trench coat and holding a red envelope. She stops in the rain and slowly raises her gaze toward a warm lamp at the end of the alley. An old stone alley at night, wet pavement reflecting amber window light, softly blurred raindrops in the foreground, distant mist. Medium shot, subject in the right third of the frame, slow camera dolly forward, one continuous shot with no scene cuts. Realistic cinematic photography, cool blue night contrasted with warm amber light, natural skin texture, restrained expression, no captions or logos.",
+    "negative_prompt": "blurry, distorted face, deformed hands, text, watermark, oversaturated, static image",
+    "model_id": "Wan-AI/Wan2.1-T2V-1.3B-Diffusers",
+    "inference_profile": "wan1.3b-native480-v1",
+    "scheduler": "unipc-flow3",
+    "precision": "float16",
+    "vae_precision": "float32",
+    "preset": "cinema",
+    "seed": 20261021,
+    "width": 832,
+    "height": 480,
+    "frames": 81,
+    "fps": 16,
+    "steps": 40,
+    "guidance": 5,
+    "max_sequence_length": 512
+  },
+  "times": {
+    "created_at": "2026-10-21T13:04:53.283845+00:00",
+    "started_at": "2026-10-21T13:04:55.521082+00:00",
+    "finished_at": "2026-10-21T13:25:41.877340+00:00"
+  },
+  "measurements": {
+    "precision": "float16",
+    "vae_precision": "float32",
+    "generation_seconds": 1232.356,
+    "model_load_seconds": 3.795,
+    "prompt_encoding_seconds": 60.982,
+    "sampling_and_decode_seconds": 1169.671,
+    "peak_gpu_allocated_bytes": 5253911552
+  },
+  "output": {
+    "sha256": "c5c313a2a5abb8fac39870a6a84ddf95db0d8e6439a14df25ada818fa6e7bc63",
+    "width": 832,
+    "height": 480,
+    "decoded_frames": 81,
+    "fps": 16,
+    "duration_seconds": 5.06,
+    "codec": "h264"
+  },
+  "visual_review": {
+    "approved": true,
+    "reason": "助手抽帧与浏览器复核：彩色块状伪影已消失，可见人物、雨夜巷道及冷暖光影；红信封变为黄色包裹，动作和运镜服从有限。仅通过实验预览，不代表剧情或跨镜一致性合格。"
+  },
+  "limitation": "参数和指标是本次任务记录；不同硬件、依赖和种子实现可能影响复现，未包含模型权重、认证信息或供应商下载链接。"
+}

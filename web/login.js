@@ -1,0 +1,13 @@
+import './session.js';
+const $=id=>document.getElementById(id);let register=false;
+function renderMode(value){register=value;$('register-fields').hidden=!value;$('login-tab').setAttribute('aria-pressed',String(!value));$('register-tab').setAttribute('aria-pressed',String(value));$('auth-submit').textContent=value?'创建账号':'登录创作空间 ↗';$('password').autocomplete=value?'new-password':'current-password';$('password').minLength=value?12:1;$('invite').required=value;$('auth-title').textContent=value?'注册你的创作账号':'登录你的创作空间';$('auth-guidance').textContent=value?'当前采用邀请注册：需要管理员提供的一次性邀请码。密码请设置为12–128个字符。':'已有账号直接登录。新用户请点击下方「注册新账号」，目前需要邀请码。';$('switch-mode').textContent=value?'已有账号？返回登录':'没有账号？注册新账号';}
+function mode(value){renderMode(value);const url=new URL(location.href);if(value)url.searchParams.set('mode','register');else url.searchParams.delete('mode');history.replaceState(null,'',url.pathname+url.search);}
+$('login-tab').onclick=()=>mode(false);$('register-tab').onclick=()=>mode(true);
+$('switch-mode').onclick=()=>mode(!register);
+mode(new URLSearchParams(location.search).get('mode')==='register');
+async function api(path,body){const r=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined});const b=await r.json();if(!r.ok)throw Error(typeof b.detail==='string'?b.detail:'请求未完成。');return b;}
+$('auth-form').onsubmit=async e=>{e.preventDefault();$('auth-submit').disabled=true;$('auth-message').textContent='正在处理…';try{const body={username:$('username').value,password:$('password').value};if(register){body.name=$('display-name').value;body.invite=$('invite').value;await api('/api/auth/register',body);$('password').value='';mode(false);$('auth-message').textContent='账号已创建，请登录。';}else{await api('/api/auth/login',body);const next=new URLSearchParams(location.search).get('next');location.href=next&&next.startsWith('/')&&!next.startsWith('//')&&!next.includes('\\')?next:'/studio';}}catch(e){$('auth-message').textContent=e.message;}finally{$('auth-submit').disabled=false;}};
+const session=await window.frameseqSession;
+if(session.required&&session.authenticated){$('auth-form').hidden=true;$('account').hidden=false;$('account-name').textContent=`${session.user.name}，你已登录。`;$('create-invite').hidden=session.user.role!=='admin';}
+$('create-invite').onclick=async()=>{try{const b=await api('/api/auth/invites');$('invite-result').textContent=`${b.code}（7天内可用一次，请仅分享给受邀者）`;}catch(e){$('invite-result').textContent=e.message;}};
+$('password-form').onsubmit=async e=>{e.preventDefault();try{await api('/api/auth/password',{current_password:$('current-password').value,new_password:$('new-password').value});location.href='/login';}catch(e){$('password-message').textContent=e.message;}};

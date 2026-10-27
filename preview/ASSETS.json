@@ -1,0 +1,26 @@
+{
+  "origin": "Approved original project examples, copied without re-encoding",
+  "live_generation": false,
+  "assets": [
+    {
+      "file": "assets/h3-rain.mp4",
+      "bytes": 944647,
+      "sha256": "7e0752bd7b7471c948be42150b482ddd054ff1e9a01e23ec4bdec3fc563e0d87"
+    },
+    {
+      "file": "assets/wan-rain.mp4",
+      "bytes": 222967,
+      "sha256": "c5c313a2a5abb8fac39870a6a84ddf95db0d8e6439a14df25ada818fa6e7bc63"
+    },
+    {
+      "file": "assets/episode-demo.mp4",
+      "bytes": 27743489,
+      "sha256": "a9300d0c468e819d3675b670e49877f540a3eb9eae6fcbf7a13aa20a81b3f3e4"
+    },
+    {
+      "file": "assets/admin-console.png",
+      "bytes": 41698,
+      "sha256": "2d82d5a0ff7d3c13ea82ee9e9e86ee1a66e665f004e8af41f90befb9437815e4"
+    }
+  ]
+}
